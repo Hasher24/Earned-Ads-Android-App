@@ -92,7 +92,6 @@ public class WithdrawActivity extends AppCompatActivity {
         withdraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInterstitialAd();
                 String details = paymentDetails.getText().toString();
                 String points = withdrawPoints.getText().toString();
                 String oBalance = balance.getText().toString();
