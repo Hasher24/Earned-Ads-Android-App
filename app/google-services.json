@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "703232216699",
+    "project_id": "earned-ads",
+    "storage_bucket": "earned-ads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703232216699:android:1d39493658d9fd3a431cde",
+        "android_client_info": {
+          "package_name": "com.hasher.earnedads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703232216699-rbjp4o1atilssljmfknu02c566dm76b8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiHMiqiwinxug2298TifqKGcj5Uen-zEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703232216699-rbjp4o1atilssljmfknu02c566dm76b8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
