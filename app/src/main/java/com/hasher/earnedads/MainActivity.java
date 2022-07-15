@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity {
     TextView balance;
     FirebaseFirestore fStore;
     String userID;
-    long time_start = 18000;
-    CountDownTimer mCountDownTimer;
-    long mTimeLeft = time_start;
     InterstitialAd mInterstitial;
 
 
@@ -293,27 +290,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void startTimer() {
-        mCountDownTimer = new CountDownTimer(mTimeLeft, 1000) {
-            @Override
-            public void onTick(long l) {
-                mTimeLeft = l;
-            }
-
-            @Override
-            public void onFinish() {
-                int reward = Integer.parseInt(balance.getText().toString().trim());
-                balance.setText(String.valueOf(reward + 1));
-                updateBalance(balance.getText().toString());
-            }
-        }.start();
-
-    }
-
-    private void stopTimer() {
-        mCountDownTimer.cancel();
-        mTimeLeft = time_start;
-    }
 
     private void loadInterstitialAd() {
         AdRequest adRequest = new AdRequest.Builder().build();
