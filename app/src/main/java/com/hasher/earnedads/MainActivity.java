@@ -11,7 +11,9 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,15 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.unity3d.ads.IUnityAdsInitializationListener;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.services.banners.IUnityBannerListener;
+import com.unity3d.services.banners.UnityBanners;
+import com.unity3d.ads.IUnityAdsShowListener;
+import com.unity3d.services.banners.BannerView;
+import com.unity3d.services.banners.UnityBannerSize;
+import com.unity3d.services.banners.BannerErrorInfo;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "TAG";
@@ -55,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userID;
     InterstitialAd mInterstitial;
-
+    String gameID = "4846099";
+    String bannerID = "Interstitial_Android";
+    Boolean testmode = false;
 
 
     @Override
@@ -70,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        UnityAds.initialize(MainActivity.this,gameID, testmode, new IUnityAdsInitializationListener() {
+            @Override
+            public void onInitializationComplete() {
+                Toast.makeText(MainActivity.this, "SDK working", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onInitializationFailed(UnityAds.UnityAdsInitializationError unityAdsInitializationError, String s) {
+                Toast.makeText(MainActivity.this, "SDK not working", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         fStore = FirebaseFirestore.getInstance();
         balance = findViewById(R.id.balanceValue);
@@ -81,8 +106,36 @@ public class MainActivity extends AppCompatActivity {
         ad1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showRewardedAd();
-                showInterstitialAd();
+
+                IUnityAdsShowListener iUnityAdsShowListener = new IUnityAdsShowListener() {
+                    @Override
+                    public void onUnityAdsShowFailure(String s, UnityAds.UnityAdsShowError unityAdsShowError, String s1) {
+                        UnityAds.load(bannerID);
+                        UnityAds.show(MainActivity.this, bannerID);
+                    }
+
+                    @Override
+                    public void onUnityAdsShowStart(String s) {
+
+                    }
+
+                    @Override
+                    public void onUnityAdsShowClick(String s) {
+
+                    }
+
+                    @Override
+                    public void onUnityAdsShowComplete(String s, UnityAds.UnityAdsShowCompletionState unityAdsShowCompletionState) {
+                        if (unityAdsShowCompletionState.equals(UnityAds.UnityAdsShowCompletionState.COMPLETED)){
+                            int reward = Integer.parseInt(balance.getText().toString().trim());
+                            balance.setText(String.valueOf(reward + 1));
+                            updateBalance(balance.getText().toString());
+                        }
+                    }
+                };
+
+                UnityAds.load(bannerID);
+                UnityAds.show(MainActivity.this, bannerID);
 
             }
         });
